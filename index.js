@@ -2,7 +2,19 @@ const express = require("express");
 const app = express();
 const Movies = require("./movies");
 const morgan = require("morgan");
+const bodyParser = require("body-parser"),
+  methodOverride = require("method-override");
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(function(err, req, res, next) {
+  // logic
+});
 // var myLogger = function(req, res, next) {
 //   req.url;
 //   console.log(req.url);
