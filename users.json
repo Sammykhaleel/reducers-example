@@ -1,0 +1,6 @@
+{ "_id" : { "$oid" : "5da35744eeab9ead13ad91f2"} , "UserName" : "Sammy Jackson" , "email" : "Laslo@yahoo.com" , "Password" : "Iwanttosleep" , "Birth_Date" : "1920-30-11"};
+{ "_id" : { "$oid" : "5da35773eeab9ead13ad91f3"} , "UserName" : "Dimitris TheGreat" , "email" : "Lolo@yahoo.com" , "Password" : "ILoveBoobies" , "Birth_Date" : "1980-08-13" , "Favorite" : [ "5da32b1ca20d2b4903b3aa01" , "5da529771399de0c8640da47"]};
+{ "_id" : { "$oid" : "5da37be056581d4eee482767"} , "UserName" : "Magda Rainaouli" , "email" : "vlakas@yahoo.com" , "Password" : "gamiesai" , "Birth_Date" : "1800-12-25"};
+{ "_id" : { "$oid" : "5da37c3656581d4eee482768"} , "UserName" : "Jacob Malaveras" , "email" : "dentinpalevo@yahoo.com" , "Password" : "eistaioloiilithioi" , "Birth_Date" : "2001-01-30"};
+{ "_id" : { "$oid" : "5da5307a1399de0c8640da50"} , "UserName" : "Michael Samoa" , "email" : "lycish@yahoo.com" , "Password" : "Idontknow" , "Birth_Date" : "2001-02-15" , "Favorite" : [ "5da5284c1399de0c8640da46"]};
+{ "_id" : { "$oid" : "5da530e81399de0c8640da51"} , "UserName" : "Johnathan Andrew" , "email" : "J.Andrew@gmail.com" , "Password" : "Iamawesome" , "Birth_Date" : "1999-12-14" , "Favorite" : [ "5da3561473df7d36d1cc3889"]};
