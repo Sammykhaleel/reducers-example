@@ -72,20 +72,41 @@ app.get("/books", function(req, res) {
 app.get("/movies", function(req, res) {
   Movies.find().then(movies => res.json(movies));
 });
+// app.get("/users", function(req, res) {
+//   Users.find().then(users => res.json(users));
+// });
+// Get all users
 app.get("/users", function(req, res) {
-  Users.find().then(users => res.json(users));
+  Users.find()
+    .then(function(users) {
+      res.status(201).json(users);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+app.get("/users/:UserName", function(req, res) {
+  Users.findOne({ UserName: req.params.Username })
+    .then(function(user) {
+      res.json(user);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 app.get("/index.html");
 app.get("/gundam.jpg");
 
 app.post("/users", function(req, res) {
-  Users.findOne({ Username: req.body.Username })
+  Users.findOne({ UserName: req.body.UserName })
     .then(function(user) {
       if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
+        return res.status(400).send(req.body.UserName + "already exists");
       } else {
         Users.create({
-          Username: req.body.Username,
+          UserName: req.body.UserName,
           Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday
@@ -103,6 +124,60 @@ app.post("/users", function(req, res) {
       console.error(error);
       res.status(500).send("Error: " + error);
     });
+});
+app.put("/users/:UserName", function(req, res) {
+  Users.findOneAndUpdate(
+    { UserName: req.params.UserName },
+    {
+      $set: {
+        UserName: req.body.UserName,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+    },
+    { new: true }, // This line makes sure that the updated document is returned
+    function(err, updatedUser) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
+});
+
+app.delete("/users/:UserName", function(req, res) {
+  Users.findOneAndRemove({ UserName: req.params.UserName })
+    .then(function(user) {
+      if (!user) {
+        res.status(400).send(req.params.UserName + " was not found");
+      } else {
+        res.status(200).send(req.params.UserName + " was deleted.");
+      }
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+app.post("/users/:Username/Movies/:MovieID", function(req, res) {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $push: { FavoriteMovies: req.params.MovieID }
+    },
+    { new: true }, // This line makes sure that the updated document is returned
+    function(err, updatedUser) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
 // listen for requests
