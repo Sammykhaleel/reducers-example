@@ -5,6 +5,10 @@ const bodyParser = require("body-parser"),
   methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const Models = require("./models.js");
+var jwtSecret = "your_jwt_secret"; // This has to be the same key used in the JWTStrategy
+var jwt = require("jsonwebtoken");
+const passport = require("passport");
+require("./passport"); // Your local passport file
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -41,9 +45,9 @@ app.get("/secreturl", function(req, res) {
   res.send(text);
 });
 app.get("/documentation.html");
-app.get("/movies", function(req, res) {
-  Movies.find().then(movies => res.json(movies));
-});
+// app.get("/movies", function(req, res) {
+//   Movies.find().then(movies => res.json(movies));
+// });
 
 // Get all users
 app.get("/users", function(req, res) {
@@ -148,6 +152,20 @@ app.post("/users/:Username/Movies/:MovieID", function(req, res) {
       }
     }
   );
+});
+
+app.get("/movies", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
+  Movies.find()
+    .then(function(movies) {
+      res.status(201).json(movies);
+    })
+    .catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
 // listen for requests
