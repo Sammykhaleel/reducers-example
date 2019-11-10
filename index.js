@@ -22,6 +22,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+var auth = require("./auth")(app);
 app.use(methodOverride());
 app.use(function(err, req, res, next) {
   // logic
