@@ -9,6 +9,9 @@ var jwtSecret = "your_jwt_secret"; // This has to be the same key used in the JW
 var jwt = require("jsonwebtoken");
 const passport = require("passport");
 require("./passport"); // Your local passport file
+const cors = require("cors");
+app.use(cors());
+const { check, validationResult } = require("express-validator");
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -62,7 +65,7 @@ app.get("/users", function(req, res) {
     });
 });
 app.get("/users/:UserName", function(req, res) {
-  Users.findOne({ UserName: req.params.Username })
+  Users.findOne({ UserName: req.params.UserName })
     .then(function(user) {
       res.json(user);
     })
@@ -74,32 +77,61 @@ app.get("/users/:UserName", function(req, res) {
 app.get("/index.html");
 app.get("/gundam.jpg");
 
-app.post("/users", function(req, res) {
-  Users.findOne({ UserName: req.body.UserName })
-    .then(function(user) {
-      if (user) {
-        return res.status(400).send(req.body.UserName + "already exists");
-      } else {
-        Users.create({
-          UserName: req.body.UserName,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
-        })
-          .then(function(user) {
-            res.status(201).json(user);
+app.post(
+  "/users",
+  // Validation logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min: 5}) which means
+  //minimum value of 5 characters are only allowed
+  [
+    check("UserName", "Username is required").isLength({ min: 5 }),
+    // check(
+    //   "UserName",
+    //   "Username contains non alphanumeric characters - not allowed."
+    // ).isAlphanumeric(),
+    check("Password", "Password is required")
+      .not()
+      .isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail()
+  ],
+  (req, res) => {
+    // check the validation object for errors
+    var errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ UserName: req.body.UserName }) // Search to see if a user with the requested username already exists
+      .then(function(user) {
+        if (user) {
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.UserName + " already exists");
+        } else {
+          Users.create({
+            UserName: req.body.UserName,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
           })
-          .catch(function(error) {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch(function(error) {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
+            .then(function(user) {
+              res.status(201).json(user);
+            })
+            .catch(function(error) {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch(function(error) {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
 app.put("/users/:UserName", function(req, res) {
   Users.findOneAndUpdate(
     { UserName: req.params.UserName },
@@ -139,7 +171,7 @@ app.delete("/users/:UserName", function(req, res) {
 });
 app.post("/users/:Username/Movies/:MovieID", function(req, res) {
   Users.findOneAndUpdate(
-    { Username: req.params.Username },
+    { UserName: req.params.UserName },
     {
       $push: { FavoriteMovies: req.params.MovieID }
     },
@@ -170,4 +202,8 @@ app.get("/movies", passport.authenticate("jwt", { session: false }), function(
 });
 
 // listen for requests
-app.listen(8080, () => console.log("Your app is listening on port 8080."));
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+  console.log("Listening on Port 3000");
+});
+//app.listen(8080, () => console.log("Your app is listening on port 8080."));
