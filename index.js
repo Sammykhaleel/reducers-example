@@ -15,9 +15,15 @@ const { check, validationResult } = require("express-validator");
 
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-  useNewUrlParser: true
-});
+// mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+//   useNewUrlParser: true
+// });
+mongoose.connect(
+  "mongodb+srv://isendil:lidnesi1@cluster0-hqbcg.mongodb.net/myFlixDB?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true
+  }
+);
 
 app.use(
   bodyParser.urlencoded({
