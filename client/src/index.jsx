@@ -7,6 +7,15 @@ import { MainView } from "./components/main-view/main-view";
 import "./index.scss";
 
 // Main component (will eventually use all the others)
+// class MyFlixApplication extends React.Component {
+//   render() {
+//     //return <MainView />;
+//     //<h1>good morning</h1>;
+//     <div className="my-flix">
+//       <div>Good morning</div>
+//     </div>;
+//   }
+// }
 class MyFlixApplication extends React.Component {
   render() {
     return <MainView />;
