@@ -3,10 +3,9 @@ import axios from "axios";
 import ReactDOM from "react-dom";
 
 export class MainView extends React.Component {
-  // One of the "hooks" available in a React Component
   componentDidMount() {
     axios
-      .get("https://terranovas.herokuapp.com/movies>")
+      .get("<https://terranovas.herokuapp.com/movies>")
       .then(response => {
         // Assign the result to the state
         this.setState({
@@ -17,7 +16,6 @@ export class MainView extends React.Component {
         console.log(error);
       });
   }
-
   render() {
     // If the state isn't initialized, this will throw on runtime
     // before the data is initially loaded
@@ -25,7 +23,6 @@ export class MainView extends React.Component {
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
-
     return (
       <div className="main-view">
         {movies.map(movie => (
@@ -37,3 +34,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+// Find the root of our app
+const container = document.getElementsByClassName("app-container")[0];
+
+// Tell React to render our app in the root DOM element
+ReactDOM.render(React.createElement(MainView), container);
