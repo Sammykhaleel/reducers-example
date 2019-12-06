@@ -1,5 +1,5 @@
 import React from "react";
-
+import { MainView } from "./components/main-view/main-view";
 import axios from "axios";
 
 export default class MainView extends React.Component {
