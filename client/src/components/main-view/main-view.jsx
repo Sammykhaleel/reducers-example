@@ -18,7 +18,7 @@ export default class MainView extends React.Component {
     return (
       <ul>
         {this.state.movies.map(movie => (
-          <li>{movie.name}</li>
+          <li>{movie.Title}</li>
         ))}
       </ul>
     );
