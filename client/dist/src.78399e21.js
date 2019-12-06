@@ -33449,13 +33449,11 @@ if ("development" === 'production') {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MainView = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 var _axios = _interopRequireDefault(require("axios"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33483,55 +33481,50 @@ function (_React$Component) {
   _inherits(MainView, _React$Component);
 
   function MainView() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
     _classCallCheck(this, MainView);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MainView).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MainView)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      persons: []
+    }, _temp));
   }
 
   _createClass(MainView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this = this;
+      var _this2 = this;
 
-      _axios.default.get("<https://terranovas.herokuapp.com/movies>").then(function (response) {
-        // Assign the result to the state
-        _this.setState({
-          movies: response.data
+      _axios.default.get("https://terranovas.herokuapp.com/movies").then(function (res) {
+        var movies = res.data;
+
+        _this2.setState({
+          movies: movies
         });
-      }).catch(function (error) {
-        console.log(error);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      // If the state isn't initialized, this will throw on runtime
-      // before the data is initially loaded
-      var movies = this.state.movies; // Before the movies have been loaded
-
-      if (!movies) return _react.default.createElement("div", {
-        className: "main-view"
-      });
-      return _react.default.createElement("div", {
-        className: "main-view"
-      }, movies.map(function (movie) {
-        return _react.default.createElement("div", {
-          className: "movie-card",
-          key: movie._id
-        }, movie.Title);
+      return _react.default.createElement("ul", null, this.state.movies.map(function (movie) {
+        return _react.default.createElement("li", null, movie.name);
       }));
     }
   }]);
 
   return MainView;
-}(_react.default.Component); // Find the root of our app
+}(_react.default.Component);
 
-
-exports.MainView = MainView;
-var container = document.getElementsByClassName("app-container")[0]; // Tell React to render our app in the root DOM element
-
-_reactDom.default.render(_react.default.createElement(MainView), container);
-},{"react":"../../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-dom":"../../node_modules/react-dom/index.js"}],"../../../../Users/isend/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+exports.default = MainView;
+},{"react":"../../node_modules/react/index.js","axios":"../node_modules/axios/index.js"}],"../../../../Users/isend/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -33699,7 +33692,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49279" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49451" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

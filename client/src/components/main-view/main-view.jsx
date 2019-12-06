@@ -1,42 +1,26 @@
 import React from "react";
+
 import axios from "axios";
-import ReactDOM from "react-dom";
 
-export class MainView extends React.Component {
+export default class MainView extends React.Component {
+  state = {
+    persons: []
+  };
+
   componentDidMount() {
-    axios
-      .get("<https://terranovas.herokuapp.com/movies>")
-      .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    axios.get(`https://terranovas.herokuapp.com/movies`).then(res => {
+      const movies = res.data;
+      this.setState({ movies });
+    });
   }
-  render() {
-    // If the state isn't initialized, this will throw on runtime
-    // before the data is initially loaded
-    const { movies } = this.state;
 
-    // Before the movies have been loaded
-    if (!movies) return <div className="main-view" />;
+  render() {
     return (
-      <div className="main-view">
-        {movies.map(movie => (
-          <div className="movie-card" key={movie._id}>
-            {movie.Title}
-          </div>
+      <ul>
+        {this.state.movies.map(movie => (
+          <li>{movie.name}</li>
         ))}
-      </div>
+      </ul>
     );
   }
 }
-
-// Find the root of our app
-const container = document.getElementsByClassName("app-container")[0];
-
-// Tell React to render our app in the root DOM element
-ReactDOM.render(React.createElement(MainView), container);
