@@ -33494,7 +33494,7 @@ function (_React$Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(MainView)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      persons: []
+      movies: []
     }, _temp));
   }
 
@@ -33692,7 +33692,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49467" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49486" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

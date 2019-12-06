@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default class MainView extends React.Component {
   state = {
-    persons: []
+    movies: []
   };
 
   componentDidMount() {
