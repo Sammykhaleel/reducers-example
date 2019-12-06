@@ -8,7 +8,7 @@ export default class MainView extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`https://terranovas.herokuapp.com/movies`).then(res => {
+    axios.get("https://terranovas.herokuapp.com/movies").then(res => {
       const movies = res.data;
       this.setState({ movies });
     });
