@@ -12,7 +12,7 @@ const Header = () => (
     <Router>
       <Nav />
       <Switch>
-        <Route path="/about" exact component={Home} />
+        <Route path="/" exact component={Home} />
       </Switch>
     </Router>
   </header>

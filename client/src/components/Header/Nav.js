@@ -11,7 +11,7 @@ const Nav = () => (
   <nav>
     <ul>
       <li>
-        <Link to="/about">Go home</Link>
+        <Link to="/">Go home</Link>
       </li>
     </ul>
   </nav>
