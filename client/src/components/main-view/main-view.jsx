@@ -29,7 +29,9 @@ export class MainView extends React.Component {
       selectedMovie: movie
     });
   }
-
+  goBack = () => {
+    this.State({ selectedMovies: null });
+  };
   render() {
     const { movies, selectedMovie } = this.state;
 
@@ -38,7 +40,7 @@ export class MainView extends React.Component {
     return (
       <div className="main-view">
         {selectedMovie ? (
-          <MovieView movie={selectedMovie} />
+          <MovieView goBack={this.goBack} movie={selectedMovie} />
         ) : (
           this.state.movies.map(movie => (
             <MovieCard

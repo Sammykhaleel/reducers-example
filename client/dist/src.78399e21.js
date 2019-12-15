@@ -37910,7 +37910,9 @@ function (_React$Component) {
         className: "label"
       }, "Director: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Director.Name)));
+      }, movie.Director.Name)), _react.default.createElement("button", {
+        onClick: this.props.goBack
+      }, "Go Back"));
     }
   }]);
 
@@ -37971,6 +37973,13 @@ function (_React$Component) {
     _classCallCheck(this, MainView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
+
+    _this.goBack = function () {
+      _this.State({
+        selectedMovies: null
+      });
+    };
+
     _this.state = {
       movies: [],
       selectedMovie: null
@@ -38013,6 +38022,7 @@ function (_React$Component) {
       return _react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
+        goBack: this.goBack,
         movie: selectedMovie
       }) : this.state.movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
@@ -38053,7 +38063,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // when the pathname is exactly the string "/"
 var Nav = function Nav() {
   return _react.default.createElement("nav", null, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/about"
+    to: "/"
   }, "Go home"))));
 };
 
@@ -38083,7 +38093,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // between routes.
 var Header = function Header() {
   return _react.default.createElement("header", null, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Nav.default, null), _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
-    path: "/about",
+    path: "/",
     exact: true,
     component: Home
   }))));
@@ -38253,7 +38263,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60290" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52334" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
