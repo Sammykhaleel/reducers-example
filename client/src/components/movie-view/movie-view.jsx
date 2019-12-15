@@ -34,6 +34,15 @@ export class MovieView extends React.Component {
           <span className="value">{movie.Director.Name}</span>
         </div>
         <button onClick={this.props.goBack}>Go Back</button>
+        <a
+          href="#"
+          onClick={e => {
+            window.open("/", "_self");
+            /*props.history.goBack();*/ e.preventDefault();
+          }}
+        >
+          Home
+        </a>
       </div>
     );
   }
