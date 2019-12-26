@@ -16,7 +16,11 @@ export class MovieView extends React.Component {
 
     return (
       <div className="movie-view">
-        <img className="movie-poster" src={movie.ImagePath} />
+        <img
+          className="movie-poster"
+          src={movie.ImagePath}
+          style={{ width: "13rem" }}
+        />
         <div className="movie-title">
           <span className="label">Title: </span>
           <span className="value">{movie.Title}</span>
@@ -34,15 +38,6 @@ export class MovieView extends React.Component {
           <span className="value">{movie.Director.Name}</span>
         </div>
         <button onClick={this.props.goBack}>Go Back</button>
-        <a
-          href="#"
-          onClick={e => {
-            window.open("/", "_self");
-            /*props.history.goBack();*/ e.preventDefault();
-          }}
-        >
-          Home
-        </a>
       </div>
     );
   }
