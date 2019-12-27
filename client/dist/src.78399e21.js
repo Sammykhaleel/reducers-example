@@ -37978,8 +37978,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
 
     _this.goBack = function () {
-      _this.State({
-        selectedMovies: null
+      _this.setState({
+        selectedMovie: null
       });
     };
 
@@ -52221,7 +52221,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57378" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56997" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
