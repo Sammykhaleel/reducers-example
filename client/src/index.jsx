@@ -25,7 +25,9 @@ class MyFlixApplication extends React.Component {
     return (
       <Router>
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">MovieMania</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            MovieMania
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">

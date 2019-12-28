@@ -1,11 +1,21 @@
-import React from 'react';
+import React from "react";
 
 export class MovieCard extends React.Component {
   render() {
     const { movie, onClick } = this.props;
 
     return (
-      <div onClick={() => onClick(movie)} className="movie-card">{movie.Title}</div>
+      <div onClick={() => onClick(movie)} className="movie-card">
+        {movie.Title}
+      </div>
     );
   }
 }
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired
+  }).isRequired,
+  onClick: PropTypes.func.isRequired
+};
