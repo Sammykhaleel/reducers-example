@@ -10,6 +10,8 @@ import "./index.scss";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 import About from "./components/Header/about";
 import Contact from "./components/Header/contact";
+import { RegistrationView } from "./components/registration-view/registration-view";
+import { LoginView } from "./components/login-view/login-view";
 import {
   Button,
   Form,
@@ -68,6 +70,8 @@ class MyFlixApplication extends React.Component {
           <Route exact path="/" component={MainView} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/register" render={() => <RegistrationView />} />
+          <Route path="/login" render={() => <LoginView />} />
         </div>
       </Router>
     );
