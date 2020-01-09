@@ -35,7 +35,7 @@ var ExtractJWT = passportJWT.ExtractJwt;
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "Username",
+      usernameField: "UserName",
       passwordField: "Password"
     },
     (username, password, callback) => {
