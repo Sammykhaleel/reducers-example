@@ -38750,8 +38750,8 @@ function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
 
-    _axios.default.post("https://jessbob-flix.herokuapp.com/login", {
-      Username: username,
+    _axios.default.post("https://terranovas.herokuapp.com/login", {
+      UserName: username,
       Password: password
     }).then(function (response) {
       var data = response.data;
@@ -52489,7 +52489,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50592" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51129" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

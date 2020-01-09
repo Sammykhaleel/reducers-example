@@ -16,8 +16,8 @@ export function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
     axios
-      .post("https://jessbob-flix.herokuapp.com/login", {
-        Username: username,
+      .post("https://terranovas.herokuapp.com/login", {
+        UserName: username,
         Password: password
       })
       .then(response => {
