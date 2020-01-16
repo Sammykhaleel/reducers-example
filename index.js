@@ -19,7 +19,7 @@ const Users = Models.User;
 //   useNewUrlParser: true
 // });
 mongoose.connect(
-  "mongodb+srv://isendil:lidnesi1@cluster0-hqbcg.mongodb.net/test?retryWrites=true&w=majority",
+  "mongodb+srv://isendil:lidnesi1@cluster0-hqbcg.mongodb.net/myFlixDB?retryWrites=true&w=majority",
   {
     useNewUrlParser: true
   }
