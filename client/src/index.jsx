@@ -1,12 +1,7 @@
 import React from "react";
-// import Header from "./components/Header/Header";
-// import Header from "./components/Header/Header";
 import ReactDOM from "react-dom";
 import { MainView } from "./components/main-view/main-view";
-// import Main from "./components/Header/Nav";
-// Import statement to indicate that you need to bundle `./index.scss`
 import "./index.scss";
-
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 import About from "./components/Header/about";
 import Contact from "./components/Header/contact";
