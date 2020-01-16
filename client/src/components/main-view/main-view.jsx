@@ -18,11 +18,20 @@ export class MainView extends React.Component {
       user: null
     };
   }
+  // componentDidMount() {
+  //   axios.get(`https://terranovas.herokuapp.com/movies`).then(res => {
+  //     const movies = res.data;
+  //     this.setState({ movies });
+  //   });
+  // }
   componentDidMount() {
-    axios.get(`https://terranovas.herokuapp.com/movies`).then(res => {
-      const movies = res.data;
-      this.setState({ movies });
-    });
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user")
+      });
+      this.getMovies(accessToken);
+    }
   }
 
   onMovieClick(movie) {
