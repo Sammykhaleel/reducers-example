@@ -38744,11 +38744,28 @@ function LoginView(props) {
   var _useState3 = (0, _react.useState)(""),
       _useState4 = _slicedToArray(_useState3, 2),
       password = _useState4[0],
-      setPassword = _useState4[1];
+      setPassword = _useState4[1]; // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   console.log(username, password);
+  //   axios
+  //     .post("https://terranovas.herokuapp.com/login", {
+  //       UserName: username,
+  //       Password: password
+  //     })
+  //     .then(response => {
+  //       const data = response.data;
+  //       props.onLoggedIn(data);
+  //     })
+  //     .catch(e => {
+  //       console.log("no such user");
+  //       alert("no such user");
+  //     });
+  // };
+
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    console.log(username, password);
+    /* Send a request to the server for authentication */
 
     _axios.default.post("https://terranovas.herokuapp.com/login", {
       UserName: username,
@@ -38758,7 +38775,6 @@ function LoginView(props) {
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log("no such user");
-      alert("no such user");
     });
   };
 
@@ -39284,18 +39300,45 @@ function (_React$Component) {
       this.setState({
         selectedMovie: movie
       });
-    }
+    } // onLoggedIn(user) {
+    //   this.setState({
+    //     user
+    //   });
+    // }
+
   }, {
     key: "onLoggedIn",
-    value: function onLoggedIn(user) {
+    value: function onLoggedIn(authData) {
+      console.log(authData);
       this.setState({
-        user: user
+        user: authData.user.Username
+      });
+      localStorage.setItem("token", authData.token);
+      localStorage.setItem("user", authData.user.Username);
+      this.getMovies(authData.token);
+    }
+  }, {
+    key: "getMovies",
+    value: function getMovies(token) {
+      var _this3 = this;
+
+      _axios.default.get("https://terranovas.herokuapp.com/movies", {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        // Assign the result to the state
+        _this3.setState({
+          movies: response.data
+        });
+      }).catch(function (error) {
+        console.log(error);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
@@ -39304,8 +39347,12 @@ function (_React$Component) {
 
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
-      }); //if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-
+      });
+      if (!user) return _react.default.createElement(_loginView.LoginView, {
+        onLoggedIn: function onLoggedIn(user) {
+          return _this4.onLoggedIn(user);
+        }
+      });
       return _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_Container.default, {
@@ -39320,7 +39367,7 @@ function (_React$Component) {
           key: movie._id,
           movie: movie,
           onClick: function onClick(movie) {
-            return _this3.onMovieClick(movie);
+            return _this4.onMovieClick(movie);
           }
         });
       })))));
@@ -52507,7 +52554,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58615" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62960" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

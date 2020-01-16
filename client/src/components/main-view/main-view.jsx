@@ -30,10 +30,35 @@ export class MainView extends React.Component {
       selectedMovie: movie
     });
   }
-  onLoggedIn(user) {
+  // onLoggedIn(user) {
+  //   this.setState({
+  //     user
+  //   });
+  // }
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      user
+      user: authData.user.Username
     });
+
+    localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.Username);
+    this.getMovies(authData.token);
+  }
+  getMovies(token) {
+    axios
+      .get("https://terranovas.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
   goBack = () => {
     this.setState({ selectedMovie: null });
@@ -43,7 +68,7 @@ export class MainView extends React.Component {
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
-    //if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
     return (
       <div className="main-view">
         <Container style={{ width: "82rem" }}>
