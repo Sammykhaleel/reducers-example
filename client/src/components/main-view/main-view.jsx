@@ -4,12 +4,11 @@ import axios from "axios";
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 
 export class MainView extends React.Component {
-  // One of the "hooks" available in a React Component
-  // state = {
-  //   movies: []
-  // };
   constructor() {
     super();
 
@@ -44,20 +43,26 @@ export class MainView extends React.Component {
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+    //if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
     return (
       <div className="main-view">
-        {selectedMovie ? (
-          <MovieView goBack={this.goBack} movie={selectedMovie} />
-        ) : (
-          this.state.movies.map(movie => (
-            <MovieCard
-              key={movie._id}
-              movie={movie}
-              onClick={movie => this.onMovieClick(movie)}
-            />
-          ))
-        )}
+        <Container style={{ width: "82rem" }}>
+          <Col>
+            <Row>
+              {selectedMovie ? (
+                <MovieView goBack={this.goBack} movie={selectedMovie} />
+              ) : (
+                this.state.movies.map(movie => (
+                  <MovieCard
+                    key={movie._id}
+                    movie={movie}
+                    onClick={movie => this.onMovieClick(movie)}
+                  />
+                ))
+              )}
+            </Row>
+          </Col>
+        </Container>
       </div>
     );
   }
