@@ -7,6 +7,7 @@ import { MovieView } from "../movie-view/movie-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export class MainView extends React.Component {
   constructor() {
@@ -18,12 +19,7 @@ export class MainView extends React.Component {
       user: null
     };
   }
-  // componentDidMount() {
-  //   axios.get(`https://terranovas.herokuapp.com/movies`).then(res => {
-  //     const movies = res.data;
-  //     this.setState({ movies });
-  //   });
-  // }
+
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
@@ -39,11 +35,7 @@ export class MainView extends React.Component {
       selectedMovie: movie
     });
   }
-  // onLoggedIn(user) {
-  //   this.setState({
-  //     user
-  //   });
-  // }
+
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -97,6 +89,44 @@ export class MainView extends React.Component {
             </Row>
           </Col>
         </Container>
+        <Router>
+          <Route
+            path="/movies/:movieId"
+            render={({ match }) => (
+              <MovieView
+                movie={movies.find(m => m._id === match.params.movieId)}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/genres/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <GenreView
+                  genre={
+                    movies.find(m => m.Genre.Name === match.params.name).Genre
+                  }
+                />
+              );
+            }}
+          />
+          <Route
+            path="/directors/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <DirectorView
+                  director={
+                    movies.find(m => m.Director.Name === match.params.name)
+                      .Director
+                  }
+                />
+              );
+            }}
+          />
+        </Router>
       </div>
     );
   }
