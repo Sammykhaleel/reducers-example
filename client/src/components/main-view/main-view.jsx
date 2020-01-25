@@ -91,12 +91,8 @@ export class MainView extends React.Component {
         </Container>
         <Router>
           <Route
-            path="/movies/:movieId"
-            render={({ match }) => (
-              <MovieView
-                movie={movies.find(m => m._id === match.params.movieId)}
-              />
-            )}
+            path="/movies/:id"
+            render={({ match }) => <MovieView movieId={match.params.id} />}
           />
           <Route
             exact

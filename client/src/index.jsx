@@ -18,6 +18,15 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class MyFlixApplication extends React.Component {
+  onLoggedOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    this.setState({
+      user: null
+    });
+    window.open("/client", "_self");
+  }
+
   render() {
     return (
       <Router>
@@ -50,6 +59,9 @@ class MyFlixApplication extends React.Component {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
+              <Button size="sm" onClick={() => this.onLoggedOut()}>
+                <b>Log Out</b>
+              </Button>
             </Nav>
             <Form inline>
               <FormControl

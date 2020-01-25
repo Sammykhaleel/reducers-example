@@ -39375,13 +39375,11 @@ function (_React$Component) {
           }
         });
       })))), _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactRouterDom.Route, {
-        path: "/movies/:movieId",
+        path: "/movies/:id",
         render: function render(_ref) {
           var match = _ref.match;
           return _react.default.createElement(_movieView.MovieView, {
-            movie: movies.find(function (m) {
-              return m._id === match.params.movieId;
-            })
+            movieId: match.params.id
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -52494,8 +52492,20 @@ function (_React$Component) {
   }
 
   _createClass(MyFlixApplication, [{
+    key: "onLoggedOut",
+    value: function onLoggedOut() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      this.setState({
+        user: null
+      });
+      window.open("/client", "_self");
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
       return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactBootstrap.Navbar, {
         bg: "light",
         expand: "lg"
@@ -52528,7 +52538,12 @@ function (_React$Component) {
         href: "#action/3.3"
       }, "Something"), _react.default.createElement(_reactBootstrap.NavDropdown.Divider, null), _react.default.createElement(_reactBootstrap.NavDropdown.Item, {
         href: "#action/3.4"
-      }, "Separated link"))), _react.default.createElement(_reactBootstrap.Form, {
+      }, "Separated link")), _react.default.createElement(_reactBootstrap.Button, {
+        size: "sm",
+        onClick: function onClick() {
+          return _this.onLoggedOut();
+        }
+      }, _react.default.createElement("b", null, "Log Out"))), _react.default.createElement(_reactBootstrap.Form, {
         inline: true
       }, _react.default.createElement(_reactBootstrap.FormControl, {
         type: "text",
@@ -52595,7 +52610,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58007" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58317" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
