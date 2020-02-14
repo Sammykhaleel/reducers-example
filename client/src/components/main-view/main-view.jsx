@@ -8,6 +8,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import DirectorView from "../director-view/director-view";
+import PropTypes from "prop-types";
+import MovieList from "../movie-list/movie-list";
 
 export class MainView extends React.Component {
   constructor() {
@@ -30,11 +33,11 @@ export class MainView extends React.Component {
     }
   }
 
-  onMovieClick(movie) {
-    this.setState({
-      selectedMovie: movie
-    });
-  }
+  // onMovieClick {
+  //   this.setState({
+  //     selectedMovie: movie
+  //   });
+  // }
 
   onLoggedIn(authData) {
     console.log(authData);
@@ -46,9 +49,21 @@ export class MainView extends React.Component {
     localStorage.setItem("user", authData.user.UserName);
     this.getMovies(authData.token);
   }
+  getUser(token) {
+    axios
+      .get("https://dimi-app.herokuapp.com/users", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        this.props.setUser(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
   getMovies(token) {
     axios
-      .get("https://terranovas.herokuapp.com/movies", {
+      .get("https://dimi-app.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
@@ -69,30 +84,43 @@ export class MainView extends React.Component {
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+    // if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
     return (
       <div className="main-view">
         <Container style={{ width: "82rem" }}>
           <Col>
             <Row>
-              {selectedMovie ? (
+              {/* {selectedMovie ? (
                 <MovieView goBack={this.goBack} movie={selectedMovie} />
               ) : (
-                this.state.movies.map(movie => (
+                this.state.movies.map(m => (
                   <MovieCard
-                    key={movie._id}
-                    movie={movie}
-                    onClick={movie => this.onMovieClick(movie)}
+                    key={m._id}
+                    movie={m}
+                    onClick={m => this.onMovieClick(m)}
                   />
                 ))
-              )}
+              )} */}
             </Row>
           </Col>
         </Container>
         <Router>
           <Route
-            path="/movies/:id"
-            render={({ match }) => <MovieView movieId={match.params.id} />}
+            exact
+            path="/"
+            render={() => {
+              if (!user)
+                return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              return <MovieList movies={movies} />;
+            }}
+          />
+          <Route
+            path="/movies/:movieId"
+            render={({ match }) => (
+              <MovieView
+                movie={movies.find(m => m._id === match.params.movieId)}
+              />
+            )}
           />
           <Route
             exact
@@ -109,15 +137,18 @@ export class MainView extends React.Component {
             }}
           />
           <Route
+            exact
             path="/directors/:name"
             render={({ match }) => {
-              if (!movies) return <div className="main-view" />;
+              if (!movies || movies.length === 0)
+                return <div className="main-view" />;
               return (
                 <DirectorView
                   director={
                     movies.find(m => m.Director.Name === match.params.name)
                       .Director
                   }
+                  movies={movies}
                 />
               );
             }}
@@ -127,3 +158,18 @@ export class MainView extends React.Component {
     );
   }
 }
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string,
+    ImagePath: PropTypes.string,
+    Description: PropTypes.string,
+    Genre: PropTypes.exact({
+      _id: PropTypes.string,
+      Name: PropTypes.string,
+      Description: PropTypes.string
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string
+    })
+  }).isRequired
+};

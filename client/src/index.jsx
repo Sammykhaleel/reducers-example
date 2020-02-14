@@ -1,5 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import moviesApp from "./reducers/reducers";
 import { MainView } from "./components/main-view/main-view";
 import "./index.scss";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
@@ -7,6 +10,7 @@ import About from "./components/Header/about";
 import Contact from "./components/Header/contact";
 import { RegistrationView } from "./components/registration-view/registration-view";
 import { LoginView } from "./components/login-view/login-view";
+import { ProfileView } from "./components/profile-view/profile-view";
 import {
   Button,
   Form,
@@ -17,6 +21,7 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const store = createStore(moviesApp);
 class MyFlixApplication extends React.Component {
   onLoggedOut() {
     localStorage.removeItem("token");
@@ -39,6 +44,9 @@ class MyFlixApplication extends React.Component {
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/">
                 Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/users">
+                Profile
               </Nav.Link>
               <Nav.Link as={Link} to="/about">
                 About
@@ -76,6 +84,7 @@ class MyFlixApplication extends React.Component {
         <div>
           <Route exact path="/" component={MainView} />
           <Route path="/about" component={About} />
+          <Route path="/users" component={ProfileView} />
           <Route path="/contact" component={Contact} />
           <Route path="/register" render={() => <RegistrationView />} />
           <Route path="/login" render={() => <LoginView />} />
