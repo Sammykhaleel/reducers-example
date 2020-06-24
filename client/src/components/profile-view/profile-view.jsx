@@ -1,104 +1,3 @@
-// import React from "react";
-
-// import axios from "axios";
-
-// import Button from "react-bootstrap/Button";
-
-// import Card from "react-bootstrap/Card";
-
-// import ListGroup from "react-bootstrap/ListGroup";
-
-// import { Link } from "react-router-dom";
-
-// export class ProfileView extends React.Component {
-//   constructor() {
-//     super();
-
-//     this.state = {
-//       Name: null,
-
-//       Password: null,
-
-//       Email: null,
-
-//       Birthday: null,
-
-//       userData: null,
-
-//       Favoritemovies: []
-//     };
-//   }
-
-//   componentDidMount() {
-//     let accessToken = localStorage.getItem("token");
-
-//     if (accessToken !== null) {
-//       this.getUser(accessToken);
-//     }
-//   }
-
-//   getUser(token) {
-//     let Email = localStorage.getItem("user");
-
-//     axios
-//       .get(`https://terranovas.herokuapp.com/users/${Email}`, {
-//         headers: { Authorization: `Bearer ${token}` }
-//       })
-
-//       .then(response => {
-//         console.log(response);
-//         this.setState({
-//           userData: response.data,
-//           Name: response.data.UserName,
-//           Password: response.data.Password,
-//           Email: response.data.Email,
-//           Birthday: response.data.Birthday,
-//           Favoritemovies: response.data.Favoritemovies
-//         });
-//       })
-//       .catch(function(error) {
-//         console.log(error);
-//       });
-//   }
-
-//   handleChange(e) {
-//     this.setState({ [e.target.Email]: e.target.value });
-//   }
-
-//   render() {
-//     const { Name, Email, Birthday, Favoritemovies } = this.state;
-
-//     return (
-//       <Card className="profile-view" style={{ width: "32rem" }}>
-//         <Card.Body>
-//           <Card.Title className="profile-title">My Profile</Card.Title>
-
-//           <ListGroup>
-//             <ListGroup.Item>Username: {Name}</ListGroup.Item>
-
-//             <ListGroup.Item>Password:******* </ListGroup.Item>
-
-//             <ListGroup.Item>Email: {Email}</ListGroup.Item>
-
-//             <ListGroup.Item>Birthday: {Birthday}</ListGroup.Item>
-//           </ListGroup>
-
-//           <div>
-//             <Link to={`/`}>
-//               <Button>MOVIES</Button>
-//             </Link>
-//             <Link to={`/update/:Email`}>
-//               <Button className="button-update" variant="outline-secondary">
-//                 Update profile
-//               </Button>
-//             </Link>
-//           </div>
-//         </Card.Body>
-//       </Card>
-//     );
-//   }
-// }
-
 import React from "react";
 //Routing
 import axios from "axios";
@@ -110,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { movies } = state;
   return { movies };
 };
@@ -125,7 +24,7 @@ export class ProfileView extends React.Component {
       birthday: null,
       userInfo: null,
       favorites: [],
-      movies: []
+      movies: [],
     };
   }
 
@@ -137,37 +36,15 @@ export class ProfileView extends React.Component {
     }
   }
 
-  // getUser(token) {
-  //   let username = localStorage.getItem("user");
-  //   let Email = localStorage.getItem("user");
-  //   axios
-  //     .get(`https://terranovas.herokuapp.com/users/${Email}`, {
-  //       headers: { Authorization: `Bearer ${token}` }
-  //     })
-  //     .then(response => {
-  //       this.setState({
-  //         userInfo: response.data,
-  //         username: response.data.UserName,
-  //         password: response.data.Password,
-  //         email: response.data.Email,
-  //         birthday: response.data.Birthday,
-  //         favorites: response.data.Favoritemovies
-  //       });
-  //     })
-  //     .catch(function(error) {
-  //       console.log(error);
-  //     });
-  // }
-
   getUser(token) {
     let Email = localStorage.getItem("user");
 
     axios
       .get(`https://terranovas.herokuapp.com/users/${Email}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       })
 
-      .then(response => {
+      .then((response) => {
         console.log(response);
         this.setState({
           userData: response.data,
@@ -175,10 +52,10 @@ export class ProfileView extends React.Component {
           Password: response.data.Password,
           Email: response.data.Email,
           Birthday: response.data.Birthday,
-          Favoritemovies: response.data.Favoritemovies
+          Favoritemovies: response.data.Favoritemovies,
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -192,13 +69,13 @@ export class ProfileView extends React.Component {
           "user"
         )}/Favorites/${favorite}`,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       )
-      .then(response => {
+      .then((response) => {
         this.getUser(localStorage.getItem("token"));
       })
-      .catch(event => {
+      .catch((event) => {
         alert("Somethings not right");
       });
   }
@@ -213,31 +90,6 @@ export class ProfileView extends React.Component {
     return (
       <div className="profile-view">
         <Container>
-          {/* <Card bg="primary" text="white" style={{ width: "30rem" }}>
-            <Card.Header>
-              <h2>
-                {"  "}
-                {username}
-              </h2>
-            </Card.Header>
-            <Card bg="light" text="primary">
-              <Card.Body>
-                <Card.Text>
-                  <b>Email: {email}</b>
-                </Card.Text>
-                <Card.Text>
-                  <b>Birthday: {birthday}</b>
-                </Card.Text>
-                <Card.Text>
-                  <Link to={`/update/:Username`}>
-                    <Button className="button-update" variant="link">
-                      Update profile
-                    </Button>
-                  </Link>
-                </Card.Text>
-              </Card.Body>{" "}
-            </Card>
-          </Card> */}
           <Card className="profile-view" style={{ width: "32rem" }}>
             <Card.Body>
               <Card.Title className="profile-title">My Profile</Card.Title>
@@ -271,8 +123,8 @@ export class ProfileView extends React.Component {
             <span className="label">Favorite Movies: </span>
 
             <span className="Value">
-              {favorites.map(favorite => {
-                const movie = movies.find(movie => movie._id === favorite);
+              {favorites.map((favorite) => {
+                const movie = movies.find((movie) => movie._id === favorite);
 
                 if (movie) {
                   return (
@@ -287,7 +139,7 @@ export class ProfileView extends React.Component {
                       <div>
                         <Button
                           size="sm"
-                          onClick={event =>
+                          onClick={(event) =>
                             this.deleteFavorite(event, favorite)
                           }
                         >

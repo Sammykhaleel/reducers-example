@@ -44,7 +44,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { visibilityFilter } = state;
   return { visibilityFilter };
 };
@@ -54,7 +54,7 @@ function MoviesList(props) {
   let filteredMovies = movies;
 
   if (visibilityFilter !== "") {
-    filteredMovies = movies.filter(m =>
+    filteredMovies = movies.filter((m) =>
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
   }
@@ -70,7 +70,7 @@ function MoviesList(props) {
 
           <br />
           <Row>
-            {filteredMovies.map(m => (
+            {filteredMovies.map((m) => (
               <Col>
                 <MovieCard key={m._id} movie={m} />
               </Col>
